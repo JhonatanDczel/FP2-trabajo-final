@@ -172,10 +172,10 @@ public class Board extends JFrame {
         board[i][4] = new King(i, 4, 0, tribe2);
         box1.add(board[i][4]);
 
-        board[i][5] = new Horse(i, 5, 0, tribe2);
+        board[i][5] = new Alfil(i, 5, 0, tribe2);
         box1.add(board[i][5]);
 
-        board[i][6] = new Alfil(i, 6, 0, tribe2);
+        board[i][6] = new Horse(i, 6, 0, tribe2);
         box1.add(board[i][6]);
 
         board[i][7] = new Torre(i, 7, 0, tribe2);
@@ -214,10 +214,10 @@ public class Board extends JFrame {
         board[i][4] = new King(i, 4, 1, tribe1);
         box1.add(board[i][4]);
 
-        board[i][5] = new Horse(i, 5, 1, tribe1);
+        board[i][5] = new Alfil(i, 5, 1, tribe1);
         box1.add(board[i][5]);
 
-        board[i][6] = new Alfil(i, 6, 1, tribe1);
+        board[i][6] = new Horse(i, 6, 1, tribe1);
         box1.add(board[i][6]);
 
         board[i][7] = new Torre(i, 7, 1, tribe1);
