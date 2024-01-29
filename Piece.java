@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Cursor;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public abstract class Piece extends JButton {
 
     revalidateColor();
 
+    setCursor(new Cursor(Cursor.HAND_CURSOR));
     setIcon(icon);
   };
 
@@ -62,12 +64,14 @@ public abstract class Piece extends JButton {
     return team;
   };
   public void isPosible() {
-    setBackground(Color.ORANGE);
+    //Verde
+    setBackground(new Color(0, 207, 79));
   };
 
   public void setBlack() {
-    color = Color.BLACK;
-    setBackground(Color.BLACK);
+    //Negro
+    color = new Color(100, 100, 100);
+    setBackground(new Color(100, 100, 100));
   };
 
   public void setWhite() {
@@ -76,7 +80,8 @@ public abstract class Piece extends JButton {
   };
 
   public void select() {
-    setBackground(Color.RED);
+    //rojo
+    setBackground(new Color(255, 77, 77));
   };
 
   public void defaultColor() {

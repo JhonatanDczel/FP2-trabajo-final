@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
+import javax.sound.sampled.*;
 
 public class Board extends JFrame {
   private Piece[][] board = new Piece[8][8];
@@ -19,7 +20,11 @@ public class Board extends JFrame {
   public Board() {
     String[] tribeSelected = selectTribes();
     newGame(tribeSelected[0], tribeSelected[1]);
+
+    playBackgroundMusic("./music/sound-track.wav");
   }
+
+
 
   private class ListenerBtn implements ActionListener {
     public void actionPerformed(ActionEvent e) {
@@ -65,8 +70,12 @@ public class Board extends JFrame {
           recoverGame();
         }
         if (e.getSource() == (JButton) btnNewPLay) {
-          resetGame();
-          turno.resetTurno();
+          SwingUtilities.invokeLater(new Runnable(){
+            public void run(){
+              resetGame();
+              turno.resetTurno();
+            }
+          });
         }
       }
     }
@@ -74,7 +83,9 @@ public class Board extends JFrame {
 
   public void resetGame() {
     removeBoard();
-    newGame("pruebita nomas", "no se lo que hago xd");
+    String[] tribusSelected = selectTribes();
+
+    newGame(tribusSelected[0], tribusSelected[1]);
     reFill();
     box1.revalidate();
     box1.repaint();
@@ -305,5 +316,17 @@ public class Board extends JFrame {
         tribes[1]);
 
     return new String[] { tribe1, tribe2 };
+  }
+
+  private void playBackgroundMusic(String path) {
+    try {
+      Clip clip = AudioSystem.getClip();
+      AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(path));
+      clip.open(inputStream);
+      clip.start();
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage());
+    }
   }
 }
