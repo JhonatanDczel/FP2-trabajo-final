@@ -17,7 +17,8 @@ public class Board extends JFrame {
   private JPanel box2;
 
   public Board() {
-    newGame("prueba1", "prueba tambien");
+    String[] tribeSelected = selectTribes();
+    newGame(tribeSelected[0], tribeSelected[1]);
   }
 
   private class ListenerBtn implements ActionListener {
@@ -114,7 +115,7 @@ public class Board extends JFrame {
       box1.repaint();
 
     } catch (Exception e) {
-      JOptionPane.showMessageDialog(box1, "ERROR: " +e+"");
+      JOptionPane.showMessageDialog(box1, "ERROR: " + e + "");
     }
   }
 
@@ -141,10 +142,22 @@ public class Board extends JFrame {
   }
 
   public void changePositions(Piece[][] board, Piece p1, Piece p2, ArrayList<Piece> posiblePositions) {
+    // Piece winner = Battle.doBattle(p1, p2);
+
+    // if (winner != null) {
+    // SwingUtilities.invokeLater(() -> {
+    // BattleWindow battleWindow = new BattleWindow(p1, p2);
+    // battleWindow.setSize(300, 300);
+    // battleWindow.setLocationRelativeTo(null);
+    // });
+    // }
+
+    // if (winner.equals(p1) || winner == null){
     board[p1.getPositionX()][p1.getPositionY()] = new VoidCel(p1.getPositionX(), p1.getPositionY());
     board[p1.getPositionX()][p1.getPositionY()].addActionListener(new ListenerBtn());
     p1.setPositions(p2.getPositionX(), p2.getPositionY());
     board[p2.getPositionX()][p2.getPositionY()] = p1;
+    // }
   }
 
   public void paintPositions(ArrayList<Piece> positions) {
@@ -268,5 +281,29 @@ public class Board extends JFrame {
       }
     }
     return false;
+  }
+
+  private String[] selectTribes() {
+    String[] tribes = { "Comala", "Dorne", "Macondo", "Riveldel" };
+
+    String tribe1 = (String) JOptionPane.showInputDialog(
+        this,
+        "Elige un pueblo para el jugador 1:",
+        "Jugador 1: Seleccion de Pueblo",
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        tribes,
+        tribes[0]);
+
+    String tribe2 = (String) JOptionPane.showInputDialog(
+        this,
+        "Elige un pueblo para el jugador 2:",
+        "Jugador 2: Seleccion de Pueblo",
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        tribes,
+        tribes[1]);
+
+    return new String[] { tribe1, tribe2 };
   }
 }

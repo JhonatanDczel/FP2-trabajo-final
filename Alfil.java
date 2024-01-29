@@ -8,6 +8,9 @@ public class Alfil extends Piece{
 
   public Alfil(int positionX, int positionY, int team, String tribe) {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
+    String ruta = "./Img_Piezas/" + tribe + "_Alfil.jpg";
+
+    setIcon(new ImageIcon(ruta));
   };
   public ArrayList<Piece> getPosiblePositions(Piece[][] board) {
     ArrayList<Piece> positions = new ArrayList<Piece>();

@@ -13,6 +13,9 @@ public class Peon extends Piece {
   public Peon(int positionX, int positionY, int team, String tribe) {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
     direction = team == 0 ? 1 : -1;
+    String ruta = "./Img_Piezas/" + tribe + "_Peon.jpg";
+
+    setIcon(new ImageIcon(ruta));
   };
 
   public ArrayList<Piece> getPosiblePositions(Piece[][] board) {

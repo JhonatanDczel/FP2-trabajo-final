@@ -8,6 +8,8 @@ public class Queen extends Piece {
 
   public Queen(int positionX, int positionY, int team, String tribe) {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
+    String ruta = "./Img_Piezas/" + tribe + "_Torre.jpg";
+    setIcon(new ImageIcon(ruta));
   };
 
     public ArrayList<Piece> getPosiblePositions(Piece[][] board) {
