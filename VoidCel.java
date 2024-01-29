@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class VoidCel extends Piece {
   public VoidCel(int positionX, int positionY) {
-    super(positionX, positionY, null, -1);
+    super(positionX, positionY, null, -1, "none");
   };
 
   public ArrayList<Piece> getPosiblePositions(Piece[][] board) {

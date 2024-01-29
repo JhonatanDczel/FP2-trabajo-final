@@ -10,8 +10,8 @@ public class Peon extends Piece {
 
   private int direction;
 
-  public Peon(int positionX, int positionY, int team) {
-    super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team);
+  public Peon(int positionX, int positionY, int team, String tribe) {
+    super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
     direction = team == 0 ? 1 : -1;
   };
 

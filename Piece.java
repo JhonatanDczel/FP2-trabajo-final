@@ -9,15 +9,25 @@ public abstract class Piece extends JButton {
   private int positionY;
   private int team;
   private Color color;
+  private String tribe;
 
-  public Piece(int positionX, int positionY, ImageIcon icon, int team) {
+  public Piece(int positionX, int positionY, ImageIcon icon, int team, String tribe) {
     this.positionX = positionX;
     this.positionY = positionY;
     this.team = team;
+    this.tribe = tribe;
 
     revalidateColor();
 
     setIcon(icon);
+  };
+
+  public String getTribe() {
+    return tribe;
+  };
+
+  public void setTribe(String tribe) {
+    this.tribe = tribe;
   };
   
 

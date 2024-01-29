@@ -17,7 +17,7 @@ public class Board extends JFrame {
   private JPanel box2;
 
   public Board() {
-    newGame();
+    newGame("prueba1", "prueba tambien");
   }
 
   private class ListenerBtn implements ActionListener {
@@ -73,7 +73,7 @@ public class Board extends JFrame {
 
   public void resetGame() {
     removeBoard();
-    newGame();
+    newGame("pruebita nomas", "no se lo que hago xd");
     reFill();
     box1.revalidate();
     box1.repaint();
@@ -153,37 +153,37 @@ public class Board extends JFrame {
     }
   }
 
-  public void newGame() {
+  public void newGame(String tribe1, String tribe2) {
     box1 = new JPanel(new GridLayout(8, 8));
     for (int i = 0; i < 8; i++) {
       if (i == 0) {
-        board[i][0] = new Torre(i, 0, 0);
+        board[i][0] = new Torre(i, 0, 0, tribe2);
         box1.add(board[i][0]);
 
-        board[i][1] = new Horse(i, 1, 0);
+        board[i][1] = new Horse(i, 1, 0, tribe2);
         box1.add(board[i][1]);
 
-        board[i][2] = new Alfil(i, 2, 0);
+        board[i][2] = new Alfil(i, 2, 0, tribe2);
         box1.add(board[i][2]);
 
-        board[i][3] = new Queen(i, 3, 0);
+        board[i][3] = new Queen(i, 3, 0, tribe2);
         box1.add(board[i][3]);
 
-        board[i][4] = new King(i, 4, 0);
+        board[i][4] = new King(i, 4, 0, tribe2);
         box1.add(board[i][4]);
 
-        board[i][5] = new Horse(i, 5, 0);
+        board[i][5] = new Horse(i, 5, 0, tribe2);
         box1.add(board[i][5]);
 
-        board[i][6] = new Alfil(i, 6, 0);
+        board[i][6] = new Alfil(i, 6, 0, tribe2);
         box1.add(board[i][6]);
 
-        board[i][7] = new Torre(i, 7, 0);
+        board[i][7] = new Torre(i, 7, 0, tribe2);
         box1.add(board[i][7]);
       }
       if (i == 1)
         for (int j = 0; j < 8; j++) {
-          board[i][j] = new Peon(i, j, 0);
+          board[i][j] = new Peon(i, j, 0, tribe2);
           box1.add(board[i][j]);
         }
 
@@ -195,32 +195,32 @@ public class Board extends JFrame {
 
       if (i == 6)
         for (int j = 0; j < 8; j++) {
-          board[i][j] = new Peon(i, j, 1);
+          board[i][j] = new Peon(i, j, 1, tribe1);
           box1.add(board[i][j]);
         }
       if (i == 7) {
-        board[i][0] = new Torre(i, 0, 1);
+        board[i][0] = new Torre(i, 0, 1, tribe1);
         box1.add(board[i][0]);
 
-        board[i][1] = new Horse(i, 1, 1);
+        board[i][1] = new Horse(i, 1, 1, tribe1);
         box1.add(board[i][1]);
 
-        board[i][2] = new Alfil(i, 2, 1);
+        board[i][2] = new Alfil(i, 2, 1, tribe1);
         box1.add(board[i][2]);
 
-        board[i][3] = new Queen(i, 3, 1);
+        board[i][3] = new Queen(i, 3, 1, tribe1);
         box1.add(board[i][3]);
 
-        board[i][4] = new King(i, 4, 1);
+        board[i][4] = new King(i, 4, 1, tribe1);
         box1.add(board[i][4]);
 
-        board[i][5] = new Horse(i, 5, 1);
+        board[i][5] = new Horse(i, 5, 1, tribe1);
         box1.add(board[i][5]);
 
-        board[i][6] = new Alfil(i, 6, 1);
+        board[i][6] = new Alfil(i, 6, 1, tribe1);
         box1.add(board[i][6]);
 
-        board[i][7] = new Torre(i, 7, 1);
+        board[i][7] = new Torre(i, 7, 1, tribe1);
         box1.add(board[i][7]);
       }
       putBtn();
