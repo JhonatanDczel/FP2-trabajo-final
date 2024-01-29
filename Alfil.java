@@ -8,7 +8,7 @@ public class Alfil extends Piece{
 
   public Alfil(int positionX, int positionY, int team, String tribe) {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
-    String ruta = "./Img_Piezas/" + tribe + "_Alfil.jpg";
+    String ruta = "./Img_Piezas/" + tribe + "_Alfil.png";
 
     setIcon(new ImageIcon(ruta));
   };

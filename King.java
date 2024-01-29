@@ -8,7 +8,7 @@ public class King extends Piece{
 
   public King(int positionX, int positionY, int team, String tribe) {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
-    String ruta = "./Img_Piezas/" + tribe + "_Torre.jpg";
+    String ruta = "./Img_Piezas/" + tribe + "_Rey.png";
     setIcon(new ImageIcon(ruta));
   };
 
