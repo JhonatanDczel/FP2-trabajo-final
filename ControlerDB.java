@@ -18,12 +18,7 @@ public class ControlerDB {
           System.out.println("Error al cargar el controlador JDBC: " + e.getMessage());
       }
   }
-  //crea un main simple para probar todo lo que has hecho aqui
-  public static void main(String[] args) {
-    ControlerDB controlerDB = new ControlerDB();
-    controlerDB.getScoresCSV();
-    controlerDB.showScoresCSV();
-  }
+
 
   private ControlerDB(){
     getScoresCSV();
@@ -143,7 +138,6 @@ public class ControlerDB {
     }
   }
 
-  //Ahora un metodo showScoresCSV que muestre una ventana con la informacion del score del de menor puntuacion (el que gano con menos movimientos) hasta el que hizo con mas jugadas, usa java swing
     public void showScoresCSV() {
         // Obtener datos ordenados
         String[] users = scores.keySet().toArray(new String[0]);
@@ -201,7 +195,7 @@ public class ControlerDB {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Agregar un icono personalizado al cuadro de diálogo
-        ImageIcon icon = new ImageIcon(getClass().getResource("./assets/BattleChess.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("assets/BattleChess.png"));
         UIManager.put("OptionPane.informationIcon", icon);
 
         // Mostrar el cuadro de diálogo

@@ -93,6 +93,10 @@ public abstract class Piece extends JButton {
     setIcon(img);
   };
 
+  public void deselect(){
+    revalidateColor();
+  }
+
   public void defaultColor() {
     setBackground(color);
   };
@@ -103,10 +107,12 @@ public abstract class Piece extends JButton {
       || this.positionX % 2 == 0 && this.positionY % 2 == 0
     ) {
       setWhite();
-      System.out.println(/*mensaje de depuracion */ "revalidado blanco");
     } else {
       setBlack();
     }
+    SwingUtilities.invokeLater(() -> {
+      repaint();
+    });
   };
 
   public abstract  ArrayList<Piece> getPosiblePositions (Piece[][] board);

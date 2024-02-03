@@ -16,17 +16,11 @@ public class Board extends JFrame {
   private JButton btnNewPLay = new JButton("Nuevo Juego");
   private JButton btnShowRanking = new JButton("Ver ranking");
   private JPanel box2;
-  private static ControlerDB controlerDB = ControlerDB.getInstance();
   private SoundTrackControler musicThread;
+  
 
-  static {
-
-    try {
-      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-    } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-      e.printStackTrace();
-    }
-  }
+  
+  private static ControlerDB controlerDB = ControlerDB.getInstance();
 
   public Board() {
     play();
@@ -37,20 +31,27 @@ public class Board extends JFrame {
 
 
   private class ListenerBtn implements ActionListener {
+    private Piece selectedPiece = null;
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() instanceof Piece) {
         Piece startBtn = (Piece) e.getSource();
+        if (selectedPiece != null) {
+          selectedPiece.deselect();
+        }
         if (finishBtn == null) {
           if (startBtn instanceof VoidCel)
             return;
-          if (startBtn.getTeam() != turno.getTurno())
+          if (startBtn.getTeam() != turno.getTurno()){
+            actualizarImagenes();
             return;
+          }
           startBtn.select();
 
           posiblePositions = startBtn.getPosiblePositions(board);
           paintPositions(posiblePositions);
 
           finishBtn = startBtn;
+          selectedPiece = startBtn;
         } else {
           removeBoard();
 
@@ -172,23 +173,24 @@ public class Board extends JFrame {
     }
   }
 
+  public void actualizarImagenes() {
+    SwingUtilities.invokeLater(() -> {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece btn = board[i][j];
+                btn.revalidateColor();
+            }
+        }
+        System.out.println("repainting..");
+    });
+  }
+
   public void changePositions(Piece[][] board, Piece p1, Piece p2, ArrayList<Piece> posiblePositions) {
-    // Piece winner = Battle.doBattle(p1, p2);
-
-    // if (winner != null) {
-    // SwingUtilities.invokeLater(() -> {
-    // BattleWindow battleWindow = new BattleWindow(p1, p2);
-    // battleWindow.setSize(300, 300);
-    // battleWindow.setLocationRelativeTo(null);
-    // });
-    // }
-
-    // if (winner.equals(p1) || winner == null){
     board[p1.getPositionX()][p1.getPositionY()] = new VoidCel(p1.getPositionX(), p1.getPositionY());
     board[p1.getPositionX()][p1.getPositionY()].addActionListener(new ListenerBtn());
     p1.setPositions(p2.getPositionX(), p2.getPositionY());
     board[p2.getPositionX()][p2.getPositionY()] = p1;
-    // }
+    actualizarImagenes();
   }
 
   public void paintPositions(ArrayList<Piece> positions) {
@@ -283,6 +285,7 @@ public class Board extends JFrame {
     add(box2, BorderLayout.SOUTH);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setVisible(true);
+    actualizarImagenes();
   };
 
   public void putBtn() {
