@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class King extends Piece{
   private static ImageIcon whiteIcon = new ImageIcon("./assets/whiteKing.png");
@@ -9,7 +10,9 @@ public class King extends Piece{
   public King(int positionX, int positionY, int team, String tribe) {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
     String ruta = "./Img_Piezas/" + tribe + "_Rey.png";
-    setIcon(new ImageIcon(ruta));
+    ImageIcon img = new ImageIcon(ruta);
+    JLabel ficha = new JLabel(img);
+    add(ficha);
   };
 
   public ArrayList<Piece> getPosiblePositions(Piece[][] board) {

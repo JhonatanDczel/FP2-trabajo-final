@@ -14,8 +14,10 @@ public class Peon extends Piece {
     super(positionX, positionY, team == 0 ? whiteIcon : blackIcon, team, tribe);
     direction = team == 0 ? 1 : -1;
     String ruta = "./Img_Piezas/" + tribe + "_Peon.png";
+    ImageIcon img = new ImageIcon(ruta);
+    JLabel ficha = new JLabel(img);
+    add(ficha);
 
-    setIcon(new ImageIcon(ruta));
   };
 
   public ArrayList<Piece> getPosiblePositions(Piece[][] board) {
@@ -49,3 +51,4 @@ public class Peon extends Piece {
     return "Peon "+super.toString();
   }
 }
+

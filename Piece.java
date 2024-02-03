@@ -21,7 +21,6 @@ public abstract class Piece extends JButton {
     revalidateColor();
 
     setCursor(new Cursor(Cursor.HAND_CURSOR));
-    setIcon(icon);
   };
 
   public String getTribe() {
@@ -64,24 +63,34 @@ public abstract class Piece extends JButton {
     return team;
   };
   public void isPosible() {
+    String madera = getTeam() == 0 ? "clara" : "oscura";
     //Verde
-    setBackground(new Color(0, 207, 79));
+    ImageIcon img = new ImageIcon("./assets/" + madera + "-verde.png");
+    setIcon(img);
   };
 
   public void setBlack() {
     //Negro
     color = new Color(100, 100, 100);
     setBackground(new Color(100, 100, 100));
+    ImageIcon img = new ImageIcon("./assets/madera-oscura.png");
+    setIcon(img);
   };
 
   public void setWhite() {
     color = Color.WHITE;
     setBackground(Color.WHITE);
+    ImageIcon img = new ImageIcon("./assets/madera-clara.png");
+    setIcon(img);
   };
 
   public void select() {
     //rojo
     setBackground(new Color(255, 77, 77));
+    String madera = getTeam() == 0 ? "clara" : "oscura";
+    //Verde
+    ImageIcon img = new ImageIcon("./assets/" + madera + "-roja.png");
+    setIcon(img);
   };
 
   public void defaultColor() {
@@ -94,6 +103,7 @@ public abstract class Piece extends JButton {
       || this.positionX % 2 == 0 && this.positionY % 2 == 0
     ) {
       setWhite();
+      System.out.println(/*mensaje de depuracion */ "revalidado blanco");
     } else {
       setBlack();
     }

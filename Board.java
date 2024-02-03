@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
-import javax.sound.sampled.*;
 
 public class Board extends JFrame {
   private Piece[][] board = new Piece[8][8];
@@ -12,16 +11,27 @@ public class Board extends JFrame {
   private Piece finishBtn = null;
   private ArrayList<Piece> posiblePositions;
   private JPanel box1;
-  private JButton btnSave = new JButton("SAVE GAME");
-  private JButton btnRecover = new JButton("RECOVER GAME");
-  private JButton btnNewPLay = new JButton("NEW PLAY");
+  private JButton btnSave = new JButton("Guardar Partida");
+  private JButton btnRecover = new JButton("Recuperar Partida");
+  private JButton btnNewPLay = new JButton("Nuevo Juego");
+  private JButton btnShowRanking = new JButton("Ver ranking");
   private JPanel box2;
+  private static ControlerDB controlerDB = ControlerDB.getInstance();
+  private SoundTrackControler musicThread;
+
+  static {
+
+    try {
+      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+    } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
+  }
 
   public Board() {
-    String[] tribeSelected = selectTribes();
-    newGame(tribeSelected[0], tribeSelected[1]);
-
-    playBackgroundMusic("./music/sound-track.wav");
+    play();
+    musicThread = new SoundTrackControler("./music/sound-track.wav");
+    musicThread.start();
   }
 
 
@@ -48,8 +58,12 @@ public class Board extends JFrame {
             changePositions(board, finishBtn, startBtn, posiblePositions);
             turno.played();
             if (!isKingLive(turno.getTurno())) {
-              JOptionPane.showConfirmDialog(null, "WINNER: El team " + turno.getOpponentTeam());
+              JOptionPane.showConfirmDialog(null, "WINNER: El team " + turno.getTribe(turno.getOpponentTeam()));
+              saveScore();
               resetGame();
+            }
+            for (Piece position : posiblePositions){
+              position.revalidateColor();
             }
           }
 
@@ -65,6 +79,9 @@ public class Board extends JFrame {
       } else {
         if (e.getSource() == (JButton) btnSave) {
           saveGame();
+        }
+        if (e.getSource() == (JButton) btnShowRanking) {
+          showScore();
         }
         if (e.getSource() == (JButton) btnRecover) {
           recoverGame();
@@ -83,9 +100,8 @@ public class Board extends JFrame {
 
   public void resetGame() {
     removeBoard();
-    String[] tribusSelected = selectTribes();
 
-    newGame(tribusSelected[0], tribusSelected[1]);
+    play();
     reFill();
     box1.revalidate();
     box1.repaint();
@@ -128,6 +144,10 @@ public class Board extends JFrame {
     } catch (Exception e) {
       JOptionPane.showMessageDialog(box1, "ERROR: " + e + "");
     }
+  }
+
+  public void showScore(){
+    controlerDB.showScoresCSV();
   }
 
   public static void main(String[] args) {
@@ -253,6 +273,7 @@ public class Board extends JFrame {
       }
     }
     btnNewPLay.addActionListener(new ListenerBtn());
+    btnShowRanking.addActionListener(new ListenerBtn());
     btnSave.addActionListener(new ListenerBtn());
     btnRecover.addActionListener(new ListenerBtn());
     setTitle("Game-Chess");
@@ -270,16 +291,20 @@ public class Board extends JFrame {
     Font font = new Font("Arial", Font.BOLD, 16);
     Dimension dimension = new Dimension(400, 50);
     btnSave.setBackground(color);
+    btnShowRanking.setBackground(color);
     btnRecover.setBackground(color);
     btnNewPLay.setBackground(color);
     btnSave.setPreferredSize(dimension);
+    btnShowRanking.setPreferredSize(dimension);
     btnRecover.setPreferredSize(dimension);
     btnNewPLay.setPreferredSize(dimension);
     btnSave.setFont(font);
+    btnShowRanking.setFont(font);
     btnRecover.setFont(font);
     btnNewPLay.setFont(font);
     box2.add(btnNewPLay);
     box2.add(btnSave);
+    box2.add(btnShowRanking);
     box2.add(btnRecover);
   }
 
@@ -318,15 +343,36 @@ public class Board extends JFrame {
     return new String[] { tribe1, tribe2 };
   }
 
-  private void playBackgroundMusic(String path) {
-    try {
-      Clip clip = AudioSystem.getClip();
-      AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(path));
-      clip.open(inputStream);
-      clip.start();
-      clip.loop(Clip.LOOP_CONTINUOUSLY);
-    } catch (Exception e) {
-      System.out.println("Error: " + e.getMessage());
+  public void play() {
+    String[] options = { "Juego rapido", "Juego personalizado" };
+    int option = JOptionPane.showOptionDialog(
+        this,
+        "Selecciona una opcion",
+        "Menu",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        options,
+        options[0]);
+
+    if (option == 0) {
+      newGame("Macondo", "Riveldel");
+      turno.setTribes("Macondo", "Riveldel");
+    } else {
+      String[] tribes = selectTribes();
+      newGame(tribes[0], tribes[1]);
+      turno.setTribes(tribes[0], tribes[1]);
     }
   }
+
+
+
+  public void saveScore() {
+    int option = JOptionPane.showConfirmDialog(null, "¿Quieres registrar tu score?", "Save score", JOptionPane.YES_NO_OPTION);
+    if (option == JOptionPane.YES_OPTION) {
+      String user = JOptionPane.showInputDialog(null, "Ingresa tu nombre", "Save score", JOptionPane.QUESTION_MESSAGE);
+      controlerDB.updateScoreCSV(user, turno.getMovements());
+    }
+  }
+
 }

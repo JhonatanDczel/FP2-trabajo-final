@@ -14,3 +14,4 @@ public class VoidCel extends Piece {
     return "Vacio "+super.toString();
   }
 }
+
