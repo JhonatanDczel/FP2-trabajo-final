@@ -1,3 +1,4 @@
 javafx-sdk-21.0.2/lib/libjfxwebkit.so filter=lfs diff=lfs merge=lfs -text
 music/sound-track.wav filter=lfs diff=lfs merge=lfs -text
 playFile/game.bin filter=lfs diff=lfs merge=lfs -text
+BattlesChess.jar filter=lfs diff=lfs merge=lfs -text
